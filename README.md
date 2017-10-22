@@ -6,6 +6,7 @@ iHealth 项目的内容爬虫
 ### 安装依赖
 * requests
 * pymongo
+* lxml
 
 ### MongoDB 配置
 1. 开启 MongoDB 权限认证：**在配置文件中加入 auth = true**

@@ -84,7 +84,7 @@ def main():
     while True:
         crawler_cnys(articles)
 
-        print ''
+        printx('Sleep %d s...'%watch_interval)
 
         # 休眠一会
         time.sleep(watch_interval)

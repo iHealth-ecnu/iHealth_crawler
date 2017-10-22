@@ -16,7 +16,7 @@ requests.adapters.DEFAULT_RETRIES = 1
 timeout = 5
 
 # 设置
-watch_interval = 10 * 60                # 默认监控时间间隔，单位为秒
+watch_interval = 1 * 60 * 60                # 默认监控时间间隔，单位为秒
 
 # 数据库配置
 mongo_dbname = 'iHealth'
