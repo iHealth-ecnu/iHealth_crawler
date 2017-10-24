@@ -1,6 +1,7 @@
 #coding=utf8
 # from __future__ import unicode_literals
 from common import *
+import re
 import time
 import base64
 import pymongo
@@ -52,22 +53,35 @@ def crawler_cnys(articles):
         if res != None:
             printx('[%d] 文章《%s》已存在数据库！'%(idx+1, article['title'].encode('utf8')))
             continue
-        # 数据库中还没有，抓取文章详情，并放入数据库
-        items = Parse(article['href'],'//div[@class="reads"]')
+        # 获取文章一共有多少页
+        items = Parse(article['href'],'//div[@class="page"]/span')
         if items <= 0:
-            raise Exception, '文章详情获取失败'
-        article['content'] = etree.tostring(items[0]).strip()
-        article['read'] = 0
-        article['upvote'] = 0
-        article['publisher'] = '中华养生网'
-        article['publisher_src'] = 'http://www.cnys.com/'
-        article['pubdate'] = datetime.now()
-        img = items[0].xpath('//div[@class="reads"]//img[1]')               # 取出第一个img元素的src
-        img = '' if len(img)==0 else img[0].attrib['src']                   # 取不到就赋空串
-        article['img'] = img                                                
-        intro = items[0].xpath('//div[@class="reads"]/p[1]')[0].text             # 取出第一个p元素的内容
-        intro = article['title'] if intro == None else intro.strip()   # 取不到就用标题代替
-        article['intro'] = intro     
+            raise Exception, '获取页数失败'
+        page = int(re.sub('\D','',items[0].text))
+        pages = map(lambda x:'_'+str(x),range(1,page+1))
+        pages[0] = ''
+        # 拼接每页文章内容
+        article['content'] = ''
+        for page in pages:
+            article_url =  article['href'].split('.html')[0] + page + '.html'
+            items = Parse(article_url,'//div[@class="reads"]')
+            if items <= 0:
+                raise Exception, '文章详情获取失败'
+            # 拼接每页文章内容
+            article['content'] += ''.join(map(lambda x:etree.tostring(x).strip(),items))
+            # 处理第一页时候的准备工作
+            if page == '':
+                article['read'] = 0
+                article['upvote'] = 0
+                article['publisher'] = '中华养生网'
+                article['publisher_src'] = 'http://www.cnys.com/'
+                article['pubdate'] = datetime.now()
+                img = items[0].xpath('//div[@class="reads"]//img[1]')               # 取出第一个img元素的src
+                img = '' if len(img)==0 else img[0].attrib['src']                   # 取不到就赋空串
+                article['img'] = img                                                
+                intro = items[0].xpath('//div[@class="reads"]/p[1]')[0].text        # 取出第一个p元素的内容
+                intro = article['title'] if intro == None else intro.strip()        # 取不到就用标题代替
+                article['intro'] = intro     
         # 插入数据库
         printx('[%d] 文章《%s》正在放入数据库……'%(idx+1, article['title'].encode('utf8')))
         articles.insert(article)
