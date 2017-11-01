@@ -86,25 +86,3 @@ def Parse_re(url,pattern):
     items = re.findall(pattern,html)
     return items
 
-def getLivePageSum(key):
-    # 获取某关键字的直播间总页数
-    url = 'https://search.bilibili.com/live?keyword=%s'%key.decode('utf8')
-    LivePageSum_pattern = r'data-num_pages="(.*?)"'
-
-    # 匹配直播间总数
-    try:
-        items = Parse(url, LivePageSum_pattern)
-        return int(items[0])
-    except Exception,e:
-        raise Exception,'获取某关键字的直播间总页数失败'
-
-def getCurLiveNo(key,page):
-    # 获取当前页面的直播间列表
-    url = 'https://search.bilibili.com/live?keyword=%s&page=%d&type=all&order=online&coverType=user_cover'%(key.decode('utf8'),page)
-    LiveNo_pattern = r'<li class="room-item">.*?live\.bilibili\.com/(.*?)\?.*?<i class="icon-live-watch"></i><span>(.*?)</span>'
-
-    # 匹配当前页面的所有直播间号
-    items = Parse(url, LiveNo_pattern)
-    # if len(items) == 0:
-    #     raise Exception,'获取第 %d 页直播间列表失败'%page
-    return items
