@@ -80,3 +80,7 @@ mongo_pwd  = 'your_password'    # mongodb 用户密码
     ```
     Usages: sh server.sh [start|stop|restart|status|log]
     ```
+
+### 参考资料
+* Python爬虫利器三之Xpath语法与lxml库的用法  
+http://cuiqingcai.com/2621.html
