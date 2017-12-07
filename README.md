@@ -1,7 +1,19 @@
 ## iHealth_crawler
 iHealth 项目的内容爬虫
 
-### 特性
+### TODO
+- [ ] 目标网站
+    - [x] http://www.cnys.com/
+    - [ ] http://health.qq.com/
+    - [ ] https://www.jianke.com/news/
+    - [ ] http://www.med66.com/web/health/
+    - [ ] http://www.wenkang.cn/
+    - [ ] http://health.sina.com.cn/
+    - [ ] http://news.39.net/
+    - [ ] http://news.99.com.cn/
+    - [ ] http://www.360kad.com/jknews/
+
+
 
 ### 安装依赖
 * requests
