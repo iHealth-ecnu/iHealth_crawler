@@ -79,7 +79,7 @@ def crawler_cnys(articles):
                 img = items[0].xpath('//div[@class="reads"]//img[1]')               # 取出第一个img元素的src
                 img = '' if len(img)==0 else img[0].attrib['src']                   # 取不到就赋空串
                 article['img'] = img                                                
-                intro = items[0].xpath('//div[@class="reads"]/p[1]')[0].text        # 取出第一个p元素的内容
+                intro = items[0].xpath('//div[@class="reads"]//p[1]')[0].text        # 取出第一个p元素的内容
                 intro = article['title'] if intro == None else intro.strip()        # 取不到就用标题代替
                 article['intro'] = intro     
         # 插入数据库
