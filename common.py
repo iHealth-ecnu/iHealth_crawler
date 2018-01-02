@@ -20,7 +20,7 @@ watch_interval = 1 * 60 * 60                # 默认监控时间间隔，单位�
 
 # 数据库配置
 mongo_dbname = 'iHealth'
-mongo_host = '123.56.8.91'          # mongodb 主机地址
+mongo_host = '39.106.10.31'          # mongodb 主机地址
 mongo_port = 27017                  # mongodb 主机端口
 mongo_user = 'admin'                # mongodb 登陆用户
 mongo_pwd  = 'admin123'             # mongodb 用户密码
